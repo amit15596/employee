@@ -1,16 +1,16 @@
 import express from 'express';
 import employeeController from '../controllers/employee.controller';
 
-const router = express.Router()
+const EmpRouter = express.Router()
 
-router.get('/api/v1/employees', employeeController.getEmployeeList);
+EmpRouter.get('/api/v1/employees', employeeController.getEmployeeList);
 
-router.get('/api/v1/employees/:id', employeeController.getEmployeeDetails);
+EmpRouter.get('/api/v1/employees/:id', employeeController.getEmployeeDetails);
 
-router.post('/api/v1/employees', employeeController.addEmployeeDetails);
+EmpRouter.post('/api/v1/employees', employeeController.addEmployeeDetails);
 
-router.put('/api/v1/employees/:id', employeeController.updateEmployeeDetails);
+EmpRouter.put('/api/v1/employees/:id', employeeController.updateEmployeeDetails);
 
-router.delete('/api/v1/employees/:id', employeeController.deleteEmployeeDetails);
+EmpRouter.delete('/api/v1/employees/:id', employeeController.deleteEmployeeDetails);
 
-module.exports = router;
+export default EmpRouter
