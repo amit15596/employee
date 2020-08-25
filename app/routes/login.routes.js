@@ -1,6 +1,6 @@
 import express from 'express'
-import passport from 'passport'
 
+//import local
 import loginController from '../controllers/login.controller';
 
 const loginRouter = express.Router()

@@ -1,6 +1,6 @@
-async function logout (req,res){
-    req.logout();
-    res.redirect('/');
+async function logout(req, res) {
+    req.logout()
+    res.redirect("/")
 }
 
-export default logout;
+export default { logout }
