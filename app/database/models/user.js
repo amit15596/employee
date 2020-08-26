@@ -1,12 +1,13 @@
 'use strict';
 module.exports = (sequelize,DataTypes)=> {
-  const user = sequelize.define("user",{
-    id:DataTypes.INTEGER,
+  const user = sequelize.define('user',
+  {
     firstName : DataTypes.STRING,
-    lastName:DataTypes.STRING,
+    lastName: DataTypes.STRING,
     email: DataTypes.STRING,
     password:  DataTypes.STRING,
-    active: DataTypes.INTEGER,
+    phone: DataTypes.INTEGER,
+    is_active: DataTypes.INTEGER,
     createdAt:  DataTypes.DATE,
     updatedAt:  DataTypes.DATE
   },{});

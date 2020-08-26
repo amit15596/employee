@@ -1,10 +1,21 @@
+// import node modules
 import passport from 'passport'
-import dbConnection from './db.config'
+import passportStrategy from 'passport-local'
 import passportJWT from 'passport-jwt'
+// import local files
+import dbConnection from './db.config'
 
-const LocalStrategy = require('passport-local').Strategy
+const LocalStrategy = passportStrategy.Strategy
 const JWTStrategy   = passportJWT.Strategy
 const ExtractJWT = passportJWT.ExtractJwt
+
+var options = {}
+options.jwtFromRequest = ExtractJWT.fromAuthHeaderAsBearerToken();
+options.secretOrKey = 'secret';
+
+// passport.serializeUser(function(user, done) {
+//     done(null, user.e_id);
+// });
 
 passport.use(
     "login",
@@ -27,7 +38,6 @@ passport.use(
                     if(!( rows[0].password == password)) {
                         return done(null, false, {message:"Oops! Wrong password."})
                     }
-
                     return done(null, rows[0]);			
                 }
             )
@@ -35,7 +45,21 @@ passport.use(
     )
 );
 
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-});
-
+passport.use(
+    new JWTStrategy(options,(jwtpayload,done)=>
+        {
+            dbConnection.query(
+                "select * from employee where e_id = '"+ jwtpayload.subject +"'",
+                (err, result) => {
+                    if(err) {
+                        return done(err);
+                    }
+                    if(!rows.length) {
+                        return done(null, false, {message:"User Not Found"})
+                    }
+                    return done(null, rows[0]);
+                }
+            )   
+        }
+    )
+)
