@@ -5,7 +5,7 @@ async function getUserList(req,res) {
 };
 
 async function getUserDetails(req,res) {
-    await User.find(req,res);
+    await User.findOne(req,res);
 };
 
 async function addUserDetails(req,res) {
@@ -14,7 +14,6 @@ async function addUserDetails(req,res) {
 
 async function updateUserDetails(req,res) {
     await User.update(req,res);
-
 };
 
 async function deleteUserDetails(req,res) {

@@ -14,7 +14,6 @@ async function addEmployeeDetails(req,res) {
 
 async function updateEmployeeDetails(req,res) {
     await Employee.update(req,res);
-
 };
 
 async function deleteEmployeeDetails(req,res) {
