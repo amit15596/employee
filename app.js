@@ -51,19 +51,43 @@ var sequelize = new Sequelize('amit_training', 'amit_sahu', 'k6rg*CPt3p#B', {
 
 const umzug = new Umzug ({
   migrations: {
+    storage: sequelize,
+    storageOptions: {
+      sequelize: db.sequelize
+    },
+    params: [
+      db.sequelize.getQueryInterface(),db.sequelize.constructor, () => {
+        throw new Error('Migration tried to use old style done callback. please upgrade umzug');
+      }
+    ],
     path: './app/database/migrations',
     pattern: /\.js$/,
-    params: [
-      sequelize.getQueryInterface()
-    ]
-  },
-  storage: 'sequelize',
-  storageOptions: {
-    sequelize: sequelize
   }
 });
+(async () => {
+  await umzug.up().then(()=>{
+    console.log('Migration Done Successfully'); 
+    const seeds = new Umzug({
+      storage: sequelize,
+      storageOptions: {
+        sequelize: db.sequelize
+      },
+      migrations: {
+        params: [
+          db.sequelize.getQueryInterface(), db.sequelize.constructor, () => {
+            throw new Error('Migration tried to use old style done callback. please upgrade umzug');
+          }
+        ],
+        path: './app/database/seeders',
+        pattern: /\.js$/
+      }
+    });
+    seeds.up().then(() => {
+      console.log('Seeding Completed');
+    });
+  });
+})();
 
-umzug.up();
 
 const port = process.env.port;
 db.sequelize.sync().then(()=>{
