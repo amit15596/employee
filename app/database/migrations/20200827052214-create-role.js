@@ -1,4 +1,7 @@
 'use strict';
+
+import Sequelize from "sequelize"
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('roles', {
@@ -13,11 +16,13 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal("NOW()")
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal("NOW()")
       }
     });
   },

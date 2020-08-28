@@ -9,7 +9,7 @@ async function create(req,res){
         phone: req.body.phone,
         is_active: req.body.is_active,
     }
-    db.user.create(userData).then(data => {
+    db.users.create(userData).then(data => {
         res.json({"status": 200,"message":"Inserted Data Successfully","response": data});
     }).catch(err=>{
         console.log(err);
@@ -18,7 +18,7 @@ async function create(req,res){
 }
 
 async function findAll(req,res) {
-    db.user.findAll()
+    db.users.findAll()
     .then(users => {
         res.json({"status": 200,"response": users});
     }).catch(err => {
@@ -29,7 +29,7 @@ async function findAll(req,res) {
 
 async function findOne(req,res) {
     const id = req.params.id;
-    db.user.findByPk(id)
+    db.users.findByPk(id)
     .then(user => {
         res.json({"status": 200,"response": user});
     }).catch(err => {
@@ -48,7 +48,7 @@ async function update(req,res){
         phone: req.body.phone,
         is_active: req.body.is_active,
     }
-    db.user.update(userData,
+    db.users.update(userData,
         {
             where: {id:id}
         }

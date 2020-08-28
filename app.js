@@ -6,7 +6,6 @@ import cors from "cors"
 import helmet from "helmet"
 import session from "express-session"
 import passport from "passport"
-import Sequelize  from "sequelize"
 import Umzug from "umzug"
 
 // local imports
@@ -43,15 +42,9 @@ app.use(userRoutes)
 app.use(employeeRoutes)
 app.use(logoutRoutes)
 
-var sequelize = new Sequelize('amit_training', 'amit_sahu', 'k6rg*CPt3p#B', {
-  host: '95.217.158.21',
-  port: 3306,
-  dialect: 'mysql'
-});
-
 const umzug = new Umzug ({
   migrations: {
-    storage: sequelize,
+    storage: "sequelize",
     storageOptions: {
       sequelize: db.sequelize
     },
@@ -64,29 +57,29 @@ const umzug = new Umzug ({
     pattern: /\.js$/,
   }
 });
-(async () => {
-  await umzug.up().then(()=>{
-    console.log('Migration Done Successfully'); 
+
+umzug.up().then(()=>{
+  console.log('Migration Done Successfully'); // eslint-disable-line
     const seeds = new Umzug({
-      storage: sequelize,
+      storage: "sequelize",
       storageOptions: {
         sequelize: db.sequelize
       },
       migrations: {
-        params: [
-          db.sequelize.getQueryInterface(), db.sequelize.constructor, () => {
-            throw new Error('Migration tried to use old style done callback. please upgrade umzug');
-          }
-        ],
-        path: './app/database/seeders',
-        pattern: /\.js$/
-      }
-    });
-    seeds.up().then(() => {
-      console.log('Seeding Completed');
-    });
+      params: [
+        db.sequelize.getQueryInterface(), db.sequelize.constructor, () => {
+          throw new Error('Migration tried to use old style done callback. please upgrade umzug');
+        }
+      ],
+      path: './app/database/seeders',
+      pattern: /\.js$/
+    }
   });
-})();
+  seeds.up().then(() => {
+    console.log('Seeding Completed');
+  });
+});
+
 
 
 const port = process.env.port;

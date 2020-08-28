@@ -1,6 +1,7 @@
 'use strict';
+
 module.exports = (sequelize,DataTypes)=> {
-  const user = sequelize.define('user',
+  const users = sequelize.define('users',
   {
     firstName : DataTypes.STRING,
     lastName: DataTypes.STRING,
@@ -11,12 +12,8 @@ module.exports = (sequelize,DataTypes)=> {
     createdAt:  DataTypes.DATE,
     updatedAt:  DataTypes.DATE
   },{});
-  user.associate = function(models) {
-    user.belongsTo(models.role,
-      {
-        foreignKey: 'r_id', as: 'role'
-      }
-    )
+  users.associate = function(models) {
+    users.belongsTo(models.roles, { foreignKey: 'r_id'})
   }
-  return user;
+  return users;
 };

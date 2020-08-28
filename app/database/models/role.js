@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize,DataTypes)=> {
-  const role = sequelize.define('role',
+  const role = sequelize.define('roles',
   {
     roleName : DataTypes.STRING,
     createdAt: DataTypes.DATE,
