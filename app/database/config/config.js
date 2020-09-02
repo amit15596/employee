@@ -1,9 +1,11 @@
-{
+import dotenv from 'dotenv';
+dotenv.config();
+module.exports = {
   "development": {
-    "username": "amit_sahu",
-    "password": "k6rg*CPt3p#B",
-    "database": "amit_training",
-    "host": "95.217.158.21",
+    "username": process.env.DB_USER,
+    "password": process.env.DB_PASSWORD,
+    "database": process.env.DB_NAME,
+    "host": process.env.DB_HOST,
     "dialect": "mysql"
   },
   "test": {

@@ -1,3 +1,7 @@
+// import node modules
+import bcrypt from 'bcrypt'
+
+//import local model
 import db from '../database/models'
 
 async function create(req,res){
@@ -5,7 +9,7 @@ async function create(req,res){
         firstName: req.body.firstName,
         lastName:  req.body.lastName,
         email: req.body.email,
-        password: req.body.password,
+        password: await bcrypt.hash(req.body.password, 10),
         phone: req.body.phone,
         is_active: req.body.is_active,
     }
@@ -44,7 +48,7 @@ async function update(req,res){
         firstName: req.body.firstName,
         lastName:  req.body.lastName,
         email: req.body.email,
-        password: req.body.password,
+        password: bcrypt(req.body.password, 10),
         phone: req.body.phone,
         is_active: req.body.is_active,
     }

@@ -9,7 +9,6 @@ import passport from "passport"
 import Umzug from "umzug"
 
 // local imports
-import employeeRoutes from './app/routes/employee.routes'
 import userRoutes from './app/routes/user.routes'
 import loginRoutes from './app/routes/login.routes'
 import logoutRoutes from './app/routes/logout.routes' 
@@ -39,7 +38,6 @@ app.get('/', (req, res) => {
 })
 app.use(loginRoutes)
 app.use(userRoutes)
-app.use(employeeRoutes)
 app.use(logoutRoutes)
 
 const umzug = new Umzug ({

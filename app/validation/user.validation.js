@@ -1,4 +1,3 @@
-//import user from './validation/user.schema'
 const { user } = require('./user.schema')
 
 async function addUserValidation(req, res, next) {

@@ -2,6 +2,7 @@
 import passport from 'passport'
 import passportStrategy from 'passport-local'
 import passportJWT from 'passport-jwt'
+import bcrypt from 'bcrypt'
 // import local files
 import db from '../database/models'
 
@@ -32,7 +33,7 @@ passport.use(
                     if(!user){
                         return done(null, false, {message:"User Not Found"})
                     }
-                    if(!user.password == password){
+                    if(!bcrypt.compareSync(password,user.password)) {
                         return done(null, false, {message:"Oops! Wrong password."})
                     }
                     return done(null,user);
