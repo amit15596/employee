@@ -16,6 +16,43 @@ options.secretOrKey = 'secret';
 options.algorithms = 'RS256';
 
 passport.use(
+    "reg",
+    new LocalStrategy(
+        {            
+            usernameField: 'email',
+            passwordField: 'password',
+            passReqToCallback: true
+        },
+        function(req, email, password, done){
+            db.registers.findOne({
+                where:{
+                    email:email,
+                }
+            }).then((user)=>{
+                if(user){
+                    return done(null, false, {message:"User Already Exists"})
+                } else {
+                    const regUserData = {
+                        first_name: req.body.first_name,
+                        last_name:  req.body.last_name,
+                        email: req.body.email,
+                        password: bcrypt.hashSync(req.body.password, 10),
+                        phone: req.body.phone,
+                    }
+                    db.registers.create(regUserData).then(data => {
+                        return done(null, false, {status: 200,message:"Inserted Data Successfully","response": data})                        
+                    }).catch((error)=>{
+                        return done(null, false, {message:error})                        
+                    })
+                }
+            }).catch(err=>{
+                console.log(err);
+            })
+        }
+    )
+);
+
+passport.use(
     "login",
     new LocalStrategy(
         {
@@ -24,7 +61,7 @@ passport.use(
             passReqToCallback: true
         },
         function(req, email, password, done) {
-            const rows = db.users.findOne({
+            db.users.findOne({
                     where:{
                         email:email,
                         is_active:'1'

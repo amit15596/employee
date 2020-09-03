@@ -9,9 +9,10 @@ import passport from "passport"
 import Umzug from "umzug"
 
 // local imports
+import regRoutes from './app/routes/register.routes';
 import userRoutes from './app/routes/user.routes'
 import loginRoutes from './app/routes/login.routes'
-import logoutRoutes from './app/routes/logout.routes' 
+import logoutRoutes from './app/routes/logout.routes'
 import "./app/config/passport"
 import db from './app/database/models'
 
@@ -36,6 +37,7 @@ app.use(passport.session());
 app.get('/', (req, res) => {
   res.send("Hello World")
 })
+app.use(regRoutes)
 app.use(loginRoutes)
 app.use(userRoutes)
 app.use(logoutRoutes)
