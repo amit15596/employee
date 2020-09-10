@@ -10,7 +10,7 @@ const LocalStrategy = passportStrategy.Strategy
 const JWTStrategy   = passportJWT.Strategy
 const ExtractJWT = passportJWT.ExtractJwt
 
-var options = {}
+const options:any = {}
 options.jwtFromRequest = ExtractJWT.fromAuthHeaderAsBearerToken();
 options.secretOrKey = 'secret';
 options.algorithms = 'RS256';
@@ -18,7 +18,7 @@ options.algorithms = 'RS256';
 passport.use(
     "reg",
     new LocalStrategy(
-        {            
+        {
             usernameField: 'email',
             passwordField: 'password',
             passReqToCallback: true
@@ -26,7 +26,7 @@ passport.use(
         function(req, email, password, done){
             db.registers.findOne({
                 where:{
-                    email:email,
+                    email,
                 }
             }).then((user)=>{
                 if(user){
@@ -40,12 +40,13 @@ passport.use(
                         phone: req.body.phone,
                     }
                     db.registers.create(regUserData).then(data => {
-                        return done(null, false, {status: 200,message:"Register Successfully","response": data})                        
+                        return done(null, false, {status: 200,message:"Register Successfully","response": data})
                     }).catch((error)=>{
-                        return done(null, false, {message:error})                        
+                        return done(null, false, {message:error})
                     })
                 }
             }).catch(err=>{
+                // tslint:disable-next-line:no-console
                 console.log(err);
             })
         }
@@ -63,7 +64,7 @@ passport.use(
         function(req, email, password, done) {
             db.users.findOne({
                     where:{
-                        email:email,
+                        email,
                         is_active:'1'
                     }
                 }).then((user) =>{
@@ -75,6 +76,7 @@ passport.use(
                     }
                     return done(null,user);
                 }).catch((err) =>{
+                    // tslint:disable-next-line:no-console
                     console.log(err);
                 })
         }
@@ -95,6 +97,7 @@ passport.use(
                 }
                 return done(null,user);
             }).catch((err)=>{
+                // tslint:disable-next-line:no-console
                 console.log(err);
             })
         }

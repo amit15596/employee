@@ -1,19 +1,20 @@
+import{Request, Response, NextFunction } from 'express';
 import passport from 'passport'
 import jwt from 'jsonwebtoken'
 
-async function login(req,res,next) {
+async function login(req:Request,res:Response,next:NextFunction) {
     passport.authenticate('login',(err,user,msg)=>{
         if(err) {
             res.json({ message:err })
         }
         else if(!user) {
             res.json({ message: msg})
-        } 
+        }
         else {
             const payload = {
                 username: user.firstName,
                 email:user.email
-            } 
+            }
             const options = {
                 subject: `${user.e_id}`,
                 expiresIn: '1h'

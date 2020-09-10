@@ -1,10 +1,12 @@
+import{Request, Response } from 'express';
+
 // import node modules
 import bcrypt from 'bcrypt'
 
-//import local model
+// import local model
 import db from '../database/models'
 
-async function create(req,res){
+async function create(req:Request,res:Response){
     const userData = {
         firstName: req.body.firstName,
         lastName:  req.body.lastName,
@@ -16,34 +18,37 @@ async function create(req,res){
     db.users.create(userData).then(data => {
         res.json({"status": 200,"message":"Inserted Data Successfully","response": data});
     }).catch(err=>{
+        // tslint:disable-next-line:no-console
         console.log(err);
         res.json({"status": 500,"error": "Internal Server Error"});
     })
 }
 
-async function findAll(req,res) {
+async function findAll(req:Request,res:Response) {
     db.users.findAll()
     .then(users => {
         res.json({"status": 200,"response": users});
     }).catch(err => {
+        // tslint:disable-next-line:no-console
         console.log(err);
         res.json({"status": 500,"error": "Internal Server Error"});
     })
  }
 
-async function findOne(req,res) {
-    const id = req.params.id;
+async function findOne(req:Request,res:Response) {
+    const id:string = req.params.id;
     db.users.findByPk(id)
     .then(user => {
         res.json({"status": 200,"response": user});
     }).catch(err => {
+        // tslint:disable-next-line:no-console
         console.log(err);
-        res.json({"status": 500,"error": "Internal Server Error"}); 
+        res.json({"status": 500,"error": "Internal Server Error"});
     })
 }
 
-async function update(req,res){
-    const id = req.params.id;
+async function update(req:Request,res:Response){
+    const id:string = req.params.id;
     const userData = {
         firstName: req.body.firstName,
         lastName:  req.body.lastName,
@@ -54,25 +59,27 @@ async function update(req,res){
     }
     db.users.update(userData,
         {
-            where: {id:id}
+            where: {id}
         }
     ).then(data=>{
-        res.json({"status": 200,"mesage":"Updated Data Successfully"});        
+        res.json({"status": 200,"mesage":"Updated Data Successfully"});
     }).catch(err => {
+        // tslint:disable-next-line:no-console
         console.log(err);
         res.json({"status": 500,"error": "Internal Server Error"});
     })
 }
 
-async function deleteRecord(req,res){
-    const id = req.params.id;
+async function deleteRecord(req:Request,res:Response){
+    const id:string = req.params.id;
     db.user.destroy(
         {
-            where: { id: id }
+            where: { id }
         }
     ).then(user=>{
-        res.json({"status": 200,"mesage":"Deleted Data Successfully"});        
+        res.json({"status": 200,"mesage":"Deleted Data Successfully"});
     }).catch(err => {
+        // tslint:disable-next-line:no-console
         console.log(err);
         res.json({"status": 500,"error": "Internal Server Error"});
     })

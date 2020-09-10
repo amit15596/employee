@@ -4,7 +4,7 @@ import passport from 'passport'
 
 // import local files
 import userController from '../controllers/user.controller'
-import userValidation from '../validation/user.validation'
+//import userValidation from '../validation/user.validation'
 
 const userRouter = express.Router()
 
@@ -12,9 +12,9 @@ userRouter.get('/api/v1/user', passport.authenticate('jwt', { session: false }),
 
 userRouter.get('/api/v1/user/:id', passport.authenticate('jwt', { session: false }), userController.getUserDetails);
 
-userRouter.post('/api/v1/user', passport.authenticate('jwt', { session: false }) ,userValidation, userController.addUserDetails);
+userRouter.post('/api/v1/user', passport.authenticate('jwt', { session: false }), userController.addUserDetails);
 
-userRouter.put('/api/v1/user/:id',passport.authenticate('jwt', { session: false }), userValidation ,userController.updateUserDetails);
+userRouter.put('/api/v1/user/:id',passport.authenticate('jwt', { session: false }),userController.updateUserDetails);
 
 userRouter.delete('/api/v1/user/:id', passport.authenticate('jwt', { session: false }),userController.deleteUserDetails);
 

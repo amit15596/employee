@@ -1,3 +1,4 @@
+import { Json } from "sequelize/types/lib/utils";
 
 let status = {
     "OK":200,
