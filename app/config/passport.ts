@@ -24,7 +24,7 @@ passport.use(
             passReqToCallback: true
         },
         function(req, email, password, done){
-            db.registers.findOne({
+            db.users.findOne({
                 where:{
                     email,
                 }
@@ -33,13 +33,14 @@ passport.use(
                     return done(null, false, {message:"User Already Exists"})
                 } else {
                     const regUserData = {
-                        first_name: req.body.first_name,
-                        last_name: req.body.last_name,
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
                         email: req.body.email,
                         password: bcrypt.hashSync(req.body.password, 10),
                         phone: req.body.phone,
+                        is_Active:1
                     }
-                    db.registers.create(regUserData).then(data => {
+                    db.users.create(regUserData).then(data => {
                         return done(null, false, {status: 200,message:"Register Successfully","response": data})
                     }).catch((error)=>{
                         return done(null, false, {message:error})

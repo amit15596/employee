@@ -12,6 +12,7 @@ import regRoutes   from './app/routes/register.routes'
 import userRoutes  from './app/routes/user.routes'
 import loginRoutes  from './app/routes/login.routes'
 import logoutRoutes  from './app/routes/logout.routes'
+import staffRouter from './app/routes/staff.routes'
 import "./app/config/passport"
 import db  from './app/database/models'
 
@@ -36,6 +37,7 @@ app.use(regRoutes)
 app.use(loginRoutes)
 app.use(userRoutes)
 app.use(logoutRoutes)
+app.use(staffRouter)
 
 // const umzug = new Umzug ({
 //   migrations: {
