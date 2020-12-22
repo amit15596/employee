@@ -6,6 +6,6 @@ const staffRouter = express.Router()
 
 staffRouter.get('/api/v1/staff',userController.getStaffList);
 
-// staffRouter.post('/api/v1/staff')
+staffRouter.post('/api/v1/staff',userController.AddNewStaff);
 
 export default staffRouter;
