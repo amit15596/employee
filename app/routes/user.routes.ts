@@ -8,8 +8,7 @@ import userController from '../controllers/user.controller'
 
 const userRouter = express.Router()
 
-userRouter.get('/api/v1/user', userController.getUserList);
-// userRouter.get('/api/v1/user', passport.authenticate('jwt', { session: false }),userController.getUserList);
+userRouter.get('/api/v1/user', passport.authenticate('jwt', { session: false }),userController.getUserList);
 
 userRouter.get('/api/v1/user/:id', passport.authenticate('jwt', { session: false }), userController.getUserDetails);
 

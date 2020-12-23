@@ -5,10 +5,18 @@ async function getStaffList(req:Request,res:Response) {
     await Staff.getStaffDetails(req,res);
 };
 
-async function AddNewStaff(req:Request,res:Response) {
+async function addNewStaff(req:Request,res:Response) {
     await Staff.addStaffDetails(req,res);
+};
+async function editStaff(req:Request,res:Response) {
+    await Staff.editStaffDetails(req,res);
 }
+async function deleteStaff(req:Request, res:Response){
+    await Staff.deleteStaffDetails(req,res);
+};
 export default {
     getStaffList,
-    AddNewStaff
+    addNewStaff,
+    deleteStaff,
+    editStaff
 }
