@@ -1,19 +1,14 @@
 // import node modules
 import passport from 'passport'
-import passportStrategy from 'passport-local'
-import passportJWT from 'passport-jwt'
+import { Strategy as LocalStrategy } from "passport-local"
+import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt"
 import bcrypt from 'bcrypt'
 // import local files
 import db from '../database/models'
 
-const LocalStrategy = passportStrategy.Strategy
-const JWTStrategy   = passportJWT.Strategy
-const ExtractJWT = passportJWT.ExtractJwt
-
-const options:any = {}
-options.jwtFromRequest = ExtractJWT.fromAuthHeaderAsBearerToken();
-options.secretOrKey = 'secret';
-options.algorithms = 'RS256';
+// const LocalStrategy = passportStrategy.Strategy
+// const JWTStrategy   = passportJWT.Strategy
+// const ExtractJWT = passportJWT.ExtractJwt
 
 passport.use(
     "reg",
@@ -83,14 +78,20 @@ passport.use(
         }
     )
 );
+// const options:any = {}
+// options.jwtFromRequest = ExtractJWT.fromAuthHeaderAsBearerToken();
+// options.secretOrKey = 'secret';
 
 passport.use(
     "jwt",
-    new JWTStrategy(options,(jwtpayload,done)=>
+    new JwtStrategy({
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey: 'secret',
+    },(jwtpayload,done)=>
         {
             db.users.findOne({
                 where:{
-                    e_id:jwtpayload.subject
+                    id:jwtpayload.sub
                 }
             }).then((user)=>{
                 if(!user){

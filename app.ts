@@ -30,14 +30,14 @@ app.use(session({
 }))
 
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 app.get('/', (req:Request,res:Response) => res.send("Hello World"))
 app.use(regRoutes)
 app.use(loginRoutes)
 app.use(userRoutes)
 app.use(logoutRoutes)
-app.use(staffRouter)
+app.use(passport.authenticate("jwt", { session: false }), staffRouter)
 
 // const umzug = new Umzug ({
 //   migrations: {

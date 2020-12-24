@@ -16,10 +16,10 @@ async function login(req:Request,res:Response,next:NextFunction) {
                 email:user.email
             }
             const options = {
-                subject: `${user.e_id}`,
+                subject: `${user.id}`,
                 expiresIn: '1h'
             }
-            const token = jwt.sign(payload, 'secret123', options)
+            const token = jwt.sign(payload, 'secret', options)
             res.json({ status: 200, message: "Login Successfully",user,"token":token})
         }
     })(req, res, next)
